@@ -32,24 +32,7 @@ const observer = new IntersectionObserver((entries) => {
 });
 observer.observe(document.getElementById('message'));
 
-// Easter egg: Click heart 5 times
-let clickCount = 0;
-document.getElementById('heart-icon').addEventListener('click', function() {
-    clickCount++;
-    if (clickCount === 5) {
-        document.getElementById('easter-egg').classList.remove('hidden');
-        // Add confetti
-        for (let i = 0; i < 50; i++) {
-            const confetti = document.createElement('div');
-            confetti.classList.add('confetti');
-            confetti.style.left = Math.random() * 100 + 'vw';
-            confetti.style.animationDelay = Math.random() * 3 + 's';
-            document.body.appendChild(confetti);
-            setTimeout(() => confetti.remove(), 3000);
-        }
-        clickCount = 0; // Reset
-    }
-});
+
 
 // Close popup
 document.getElementById('close-popup').addEventListener('click', function() {
