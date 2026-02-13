@@ -71,18 +71,6 @@ header {
     animation: fadeIn 2s ease-in 0.5s both;
 }
 
-#surprise-btn {
-    background: linear-gradient(45deg, #ff69b4, #dda0dd);
-    color: white;
-    border: none;
-    padding: 1rem 2rem;
-    font-size: 1.2rem;
-    border-radius: 50px;
-    cursor: pointer;
-    box-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
-    transition: all 0.3s;
-    animation: fadeIn 2s ease-in 1s both;
-}
 
 #surprise-btn:hover {
     transform: scale(1.1);
