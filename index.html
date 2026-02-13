@@ -196,6 +196,45 @@
             pointer-events: none;
             z-index: 10;
         }
+        /* Proposal Section */
+        .proposal-section {
+            text-align: center;
+            position: relative;
+        }
+        .options {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            position: relative;
+            height: 100px;
+        }
+        .option-button {
+            background: linear-gradient(45deg, #FF69B4, #FF1493);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .option-button:hover {
+            transform: scale(1.1);
+        }
+        .no {
+            position: absolute;
+            left: 60%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .proposal-message {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            color: #8B0000;
+            margin-top: 2rem;
+            display: none;
+        }
         /* Responsive Design */
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.5rem; }
@@ -290,6 +329,19 @@ Always and forever your bestie 🌹</p> <!-- CUSTOMIZE: Replace with your messag
         <button class="hug-button" id="hug-button">🤗 Hug Me!</button>
     </section>
 
+    <!-- Proposal Section -->
+    <section id="proposal-section" class="proposal-section">
+        <h2>Will you be my Valentine??</h2>
+        <p>PS: I'll be heartbroken if you are gonna deny my proposal. Btw you can try 😏😮‍💨</p>
+        <div class="options">
+            <button class="option-button" id="yes-button">For Sure</button>
+            <button class="option-button no" id="no-button">No</button>
+        </div>
+        <div id="proposal-message" class="proposal-message">
+            <p>yayy! Thank you soo much you just made my day and also you're stuck with me for 4ever.</p>
+        </div>
+    </section>
+
     <!-- Lightbox for Gallery -->
     <div class="lightbox" id="lightbox">
         <span class="nav prev" id="prev">&lt;</span>
@@ -375,6 +427,32 @@ Always and forever your bestie 🌹</p> <!-- CUSTOMIZE: Replace with your messag
                 document.body.appendChild(confetti);
                 setTimeout(() => confetti.remove(), 2000);
             }
+        });
+
+        // Proposal functionality
+        const yesButton = document.getElementById('yes-button');
+        const noButton = document.getElementById('no-button');
+        const proposalMessage = document.getElementById('proposal-message');
+
+        yesButton.addEventListener('click', () => {
+            document.querySelector('.options').style.display = 'none';
+            proposalMessage.style.display = 'block';
+            // Confetti hearts
+            for (let i = 0; i < 50; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'confetti';
+                heart.innerHTML = '💖';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animation = `fall ${Math.random() * 2 + 1}s linear`;
+                document.body.appendChild(heart);
+                setTimeout(() => heart.remove(), 2000);
+            }
+        });
+
+        noButton.addEventListener('click', () => {
+            // Move the button to a random position
+            noButton.style.left = Math.random() * 80 + 10 + '%';
+            noButton.style.top = Math.random() * 80 + 10 + '%';
         });
 
         // CSS for confetti fall (added dynamically)
