@@ -3,84 +3,357 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Valentine's Day!</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Happy Valentine's Day</title>
+    <!-- Google Fonts for elegant typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #FFB6C1, #DDA0DD, #F0E68C);
+            color: #333;
+            overflow-x: hidden;
+            position: relative;
+        }
+        /* Floating hearts background animation */
+        .floating-hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .heart {
+            position: absolute;
+            color: rgba(255, 182, 193, 0.6);
+            font-size: 2rem;
+            animation: float 10s linear infinite;
+        }
+        .heart:nth-child(odd) { animation-delay: -5s; }
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); }
+            100% { transform: translateY(-100vh) rotate(360deg); }
+        }
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        .hero h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4rem;
+            color: #8B0000;
+            margin-bottom: 1rem;
+            animation: fadeIn 2s ease-in-out;
+        }
+        .hero p {
+            font-size: 1.5rem;
+            color: #4B0082;
+            animation: fadeIn 3s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* Sections */
+        section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Photo Gallery */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        .gallery img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .gallery img:hover {
+            transform: scale(1.05);
+        }
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .lightbox img {
+            max-width: 80%;
+            max-height: 80%;
+            border-radius: 10px;
+        }
+        .lightbox .nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            color: white;
+            cursor: pointer;
+            user-select: none;
+        }
+        .lightbox .prev { left: 10px; }
+        .lightbox .next { right: 10px; }
+        .lightbox .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 2rem;
+            color: white;
+            cursor: pointer;
+        }
+        /* Video Section */
+        .videos {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+        }
+        .video-container {
+            flex: 1 1 300px;
+            max-width: 500px;
+        }
+        .video-container iframe, .video-container video {
+            width: 100%;
+            height: 300px;
+            border-radius: 10px;
+            border: 2px solid #FFB6C1;
+        }
+        /* Messages Section */
+        .messages {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        .message-card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        .message-card:hover {
+            transform: translateY(-5px);
+        }
+        .message-card h3 {
+            font-family: 'Dancing Script', cursive;
+            color: #8B0000;
+            margin-bottom: 1rem;
+        }
+        /* Interactive Element: Send a Virtual Hug */
+        .interactive {
+            text-align: center;
+        }
+        .hug-button {
+            background: linear-gradient(45deg, #FF69B4, #FF1493);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .hug-button:hover {
+            transform: scale(1.1);
+        }
+        .confetti {
+            position: absolute;
+            pointer-events: none;
+            z-index: 10;
+        }
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .hero p { font-size: 1.2rem; }
+            .gallery { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+            .video-container { flex: 1 1 100%; }
+        }
+    </style>
 </head>
 <body>
-    <!-- Header with heart icon for easter egg -->
-    <header>
-        <div id="heart-icon">💖</div>
-    </header>
+    <!-- Floating Hearts Background -->
+    <div class="floating-hearts" id="hearts"></div>
 
-    <!-- Landing Page Section -->
-    <section id="hero">
-        <div class="hero-content">
-            <h1>Happy Valentine’s Day, My Bestest Human 💖</h1>
-            <p>You make life softer, brighter, and 100x better.</p>
-            
-        </div>
-        <!-- Floating hearts animation -->
-        <div class="floating-hearts">
-            <span>💖</span>
-            <span>💕</span>
-            <span>❤️</span>
-            <span>💖</span>
-            <span>💕</span>
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Happy Valentine's Day, [Friend's Name]!</h1> <!-- CUSTOMIZE: Replace [Friend's Name] with your friend's name -->
+        <p>Though miles apart, our friendship is always close to my heart. 💖</p>
+    </section>
+
+    <!-- Photo Gallery -->
+    <section id="gallery-section" class="gallery-section">
+        <h2>Memories Together</h2>
+        <div class="gallery">
+            <img src="https://via.placeholder.com/300x200?text=Photo+1" alt="Memory 1" data-index="0"> <!-- CUSTOMIZE: Replace src with your photo URLs -->
+            <img src="https://via.placeholder.com/300x200?text=Photo+2" alt="Memory 2" data-index="1"> <!-- CUSTOMIZE: Add more <img> tags as needed -->
+            <img src="https://via.placeholder.com/300x200?text=Photo+3" alt="Memory 3" data-index="2">
         </div>
     </section>
 
-    <!-- Photo Memory Section -->
-    <section id="photos">
-        <h2>My love ❤️</h2>
-        <div class="photo-grid">
-            <div class="photo-item">
-                <img src="photo1.jpg" alt="Memory 1">
-                <p>Chotic side looks good on you 🫀</p>
+    <!-- Video Section -->
+    <section id="video-section" class="video-section">
+        <h2>Special Moments</h2>
+        <div class="videos">
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe> <!-- CUSTOMIZE: Replace src with your YouTube embed URL or use <video> for local files -->
             </div>
-            <div class="photo-item">
-                <img src="photo2.jpg" alt="Memory 2">
-                <p>The prettiest person alive 🫶🏻</p>
-            </div>
-            <div class="photo-item">
-                <img src="photo3.jpg" alt="Memory 3">
-                <p>My fav person 4ever ❤️</p>
-            </div>
-            
+            <!-- Add more video containers as needed -->
         </div>
     </section>
 
-    <!-- Reasons Section -->
-    <section id="reasons">
-        <h2>Why You’re My Favorite Person</h2>
-        <div class="reasons-grid">
-            <div class="reason-card">
-                <p>You listen without judging</p>
+    <!-- Messages Section -->
+    <section id="messages-section" class="messages-section">
+        <h2>Heartfelt Messages</h2>
+        <div class="messages">
+            <div class="message-card">
+                <h3>Dear [Friend's Name],</h3> <!-- CUSTOMIZE: Replace [Friend's Name] -->
+                <p>This is a placeholder for your heartfelt message. Write something sweet here about your friendship and how much it means to you. Lorem ipsum dolor sit amet, consectetur adipiscing elit. 💕</p> <!-- CUSTOMIZE: Replace with your message -->
             </div>
-            <div class="reason-card">
-                <p>You hype me up always</p>
+            <div class="message-card">
+                <h3>Another Letter</h3>
+                <p>Another placeholder message. Share memories, dreams, or just how grateful you are. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 🌹</p> <!-- CUSTOMIZE: Replace with your message -->
             </div>
-            <div class="reason-card">
-                <p>You understand my silence</p>
-            </div>
-            <div class="reason-card">
-                <p>You make ordinary days special</p>
-            </div>
-            <div class="reason-card">
-                <p>You’re my safe place</p>
-            </div>
+            <!-- Add more message cards as needed -->
         </div>
     </section>
 
-    <!-- Sweet Message Section -->
-    <section id="message">
-        <h2>A Special Message</h2>
-        <div id="typing-text"></div>
+    <!-- Interactive Element -->
+    <section id="interactive-section" class="interactive-section">
+        <h2>Send a Virtual Hug</h2>
+        <button class="hug-button" id="hug-button">🤗 Hug Me!</button>
     </section>
 
-   
+    <!-- Lightbox for Gallery -->
+    <div class="lightbox" id="lightbox">
+        <span class="nav prev" id="prev">&lt;</span>
+        <img id="lightbox-img" src="" alt="">
+        <span class="nav next" id="next">&gt;</span>
+        <span class="close" id="close">&times;</span>
+    </div>
 
-    
+    <script>
+        // Generate floating hearts
+        const heartsContainer = document.getElementById('hearts');
+        for (let i = 0; i < 20; i++) {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            heartsContainer.appendChild(heart);
+        }
 
-    <script src="script.js"></script>
+        // Intersection Observer for scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('section').forEach(section => observer.observe(section));
+
+        // Lightbox functionality
+        const gallery = document.querySelectorAll('.gallery img');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const prev = document.getElementById('prev');
+        const next = document.getElementById('next');
+        const close = document.getElementById('close');
+        let currentIndex = 0;
+
+        gallery.forEach((img, index) => {
+            img.addEventListener('click', () => {
+                currentIndex = index;
+                showImage();
+                lightbox.style.display = 'flex';
+            });
+        });
+
+        function showImage() {
+            lightboxImg.src = gallery[currentIndex].src;
+        }
+
+        prev.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + gallery.length) % gallery.length;
+            showImage();
+        });
+
+        next.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % gallery.length;
+            showImage();
+        });
+
+        close.addEventListener('click', () => {
+            lightbox.style.display = 'none';
+        });
+
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                lightbox.style.display = 'none';
+            }
+        });
+
+        // Virtual Hug with Confetti Animation
+        const hugButton = document.getElementById('hug-button');
+        hugButton.addEventListener('click', () => {
+            // Simple confetti simulation with hearts
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.innerHTML = '💖';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.animation = `fall ${Math.random() * 2 + 1}s linear`;
+                document.body.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 2000);
+            }
+        });
+
+        // CSS for confetti fall (added dynamically)
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fall {
+                0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+                100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
 </body>
 </html>
